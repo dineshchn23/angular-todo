@@ -1,0 +1,26 @@
+<div style="padding:50px">
+    <h2>Edit Employee</h2>
+    <mat-grid-list cols="4" gutterSize="5px" rowHeight="100px">
+        <mat-grid-tile colspan="1" rowspan="1">
+            <mat-form-field style="width:100%">
+                <input matInput [formControl]="nameFormControl" placeholder="Enter your name" value="">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1" rowspan="1">
+            <mat-form-field style="width:100%">
+                <input matInput [formControl]="ageFormControl" placeholder="Enter your age" value="">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1" rowspan="1">
+            <mat-form-field style="width:100%">
+                <input matInput [formControl]="salaryFormControl" placeholder="Enter your salary" value="">
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <button mat-raised-button color="primary" style="width:100px" (click)="save()">Save</button>
+    <div *ngIf="loadSpinner" class="spinner-overlay">
+        <mat-progress-spinner class="example-margin" color="warn" [diameter]="50" [strokeWidth]="3"
+            mode="indeterminate">
+        </mat-progress-spinner>
+    </div>
+</div>

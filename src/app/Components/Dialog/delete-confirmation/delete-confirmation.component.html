@@ -1,0 +1,11 @@
+<div mat-dialog-title>Are you sure want to delete employee?</div>
+<mat-dialog-content class="mat-typography">
+    <h4 style="margin: 0" mat-line>Name</h4>
+    <p mat-line>{{dialogData.employee_name}}, {{dialogData.employee_age}}</p>
+    <h4 style="margin: 0" mat-line>Salary</h4>
+    <p mat-line>{{dialogData.employee_salary}}</p>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" style="width:100px" (click)="delete()">Delete</button>
+    <button mat-raised-button color="warn" style="width:100px" (click)="close()">Close</button>
+</div>

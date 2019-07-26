@@ -1,0 +1,45 @@
+<div style="padding:50px">
+  <h2>Employees</h2>
+  <a href="/add" mat-button mat-stroked-button color="primary" (click)="add()"> Add new employee </a>
+
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="employee_name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.employee_name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="employee_age">
+      <th mat-header-cell *matHeaderCellDef> Age </th>
+      <td mat-cell *matCellDef="let element"> {{element.employee_age}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="employee_salary">
+      <th mat-header-cell *matHeaderCellDef> Salary </th>
+      <td mat-cell *matCellDef="let element"> {{element.employee_salary}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <a href="/edit/{{element.id}}" mat-icon-button color="primary" (click)="view(element)">
+          <mat-icon>edit</mat-icon>
+        </a>
+        <button mat-icon-button color="warn" (click)="delete(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator #MatPaginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    (page)="pageEvent = $event">
+  </mat-paginator>
+</div>
+<div *ngIf="loadSpinner" class="spinner-overlay">
+  <mat-progress-spinner class="example-margin" color="warn" [diameter]="50" [strokeWidth]="3" mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+
+<router-outlet></router-outlet>
