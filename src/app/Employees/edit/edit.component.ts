@@ -1,14 +1,15 @@
-import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
+import * as core from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-@Component({
+import { ActivatedRoute, Router } from '@angular/router';
+import { EmployeeService } from '../employee.service';
+@core.Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements core.OnInit {
   loadSpinner = false
   nameFormControl = new FormControl('', [
     Validators.required,
@@ -19,15 +20,14 @@ export class EditComponent implements OnInit {
   salaryFormControl = new FormControl('', [
     Validators.required,
   ]);
-  constructor(private http: HttpClient, private router: Router, @Inject(ActivatedRoute) private _activatedroute: ActivatedRoute, private _snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private router: Router, @core.Inject(ActivatedRoute) private _activatedroute: ActivatedRoute, private _snackBar: MatSnackBar, private _employee: EmployeeService) { }
 
   ngOnInit() {
     this.view()
   }
 
   view() {
-    this.http
-      .get(`http://dummy.restapiexample.com/api/v1/employee/${this._activatedroute.snapshot.params.id}`)
+    this._employee.get({ id: this._activatedroute.snapshot.params.id })
       .subscribe((data: any) => {
         this.nameFormControl.setValue(data.employee_name);
         this.ageFormControl.setValue(data.employee_age);
@@ -36,9 +36,8 @@ export class EditComponent implements OnInit {
   }
   save() {
     this.loadSpinner = true
-    let payload = { "name": this.nameFormControl.value, "salary": this.salaryFormControl.value, "age": this.ageFormControl.value }
-    this.http
-      .put(`http://dummy.restapiexample.com/api/v1/update/${this._activatedroute.snapshot.params.id}`, payload)
+    let payload = { id: this._activatedroute.snapshot.params.id, name: this.nameFormControl.value, salary: this.salaryFormControl.value, age: this.ageFormControl.value }
+    this._employee.save(payload)
       .subscribe(
         (data: any) => {
           this.loadSpinner = false
